@@ -1,0 +1,13 @@
+has_backend_changed=$(git diff --cached --name-only -- backend/)
+has_frontend_changed=$(git diff --cached --name-only -- frontend/)
+
+if [ -n "$backend_changes" ]; then
+  echo "Running backend tests..."
+fi
+
+# Run frontend tests if there are frontend changes.
+if [ -n "$frontend_changes" ]; then
+    echo "Running frontend tests..."
+		make lint_frontend
+fi
+
