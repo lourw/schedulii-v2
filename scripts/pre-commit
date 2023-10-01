@@ -1,13 +1,16 @@
-has_backend_changed=$(git diff --cached --name-only -- backend/)
-has_frontend_changed=$(git diff --cached --name-only -- frontend/)
+HAS_BACKEND_CHANGED=$(git diff --cached --name-only -- backend/)
+HAS_FRONTEND_CHANGED=$(git diff --cached --name-only -- frontend/)
 
-if [ -n "$backend_changes" ]; then
-  echo "Running backend tests..."
+echo "Running pre-commit hooks"
+echo "Backend changed: $HAS_BACKEND_CHANGED"
+echo "Frontend changed: $HAS_FRONTEND_CHANGED"
+
+if [ -n "$HAS_BACKEND_CHANGED" ]; then
+	echo "Running backend pre-commits checks..."
+	make lint_backend
 fi
 
-# Run frontend tests if there are frontend changes.
-if [ -n "$frontend_changes" ]; then
-    echo "Running frontend tests..."
-		make lint_frontend
+if [ -n "$HAS_FRONTEND_CHANGED" ]; then
+	echo "Running frontend pre-commit checks..."
+	make lint_frontend
 fi
-
