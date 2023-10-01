@@ -9,8 +9,8 @@ The application runs on a rust backend using the axum web framework.
 ### Frontend
 The UI components of the app are built out in Svelte. 
 
-## Setup
-The application is configured to be easy to run on local. You just need to run `make build_and_run` to start the application. 
+## Developer Setup
+Navigate to the root of this project and run `make setup` 
 
 Any PR to the repo requires CI checks to pass and at least one approval from a reviewer before it can be merged in. All PR titles must follow the conventional commits standard. All tests (both unit and integration) must pass before review is requested. 
 
