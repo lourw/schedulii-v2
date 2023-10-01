@@ -1,0 +1,22 @@
+name: Execute Backend CI
+on: 
+  pull_request:
+    paths:
+    - 'backend/**'
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:    
+    - name: Checkout Repo
+      uses: actions/checkout@v4
+
+    - name: Install Toolchain
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: nightly
+        components: clippy
+        override: true
+
+    - name: Run Linter
+      run: make lint_backend
