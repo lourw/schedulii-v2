@@ -1,0 +1,28 @@
+name: Execute Frontend CI
+on:
+  pull_request:
+    paths:
+    - 'frontend/**'
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.8
+
+      - name: Install Dependencies
+        run: make setup_frontend
+
+      - name: Run Linters
+        run: make lint_frontend
