@@ -7,5 +7,8 @@ assignees: ''
 
 ---
 
+## Description
+<!-- What needs to be done? Provide steps involved if possible. -->
+
 ## Acceptance Criteria
 <!-- What needs to be done for this ticket to be considered completed? -->
