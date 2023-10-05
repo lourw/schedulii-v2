@@ -43,3 +43,6 @@ setup: setup_backend setup_frontend
 
 start_app: 
 	docker-compose up
+
+stop_app:
+	docker-compose down
