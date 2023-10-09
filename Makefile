@@ -52,3 +52,7 @@ stop_app:
 test_backend:
 	$(CD_BACKEND) && \
 	cargo test
+
+test_frontend:
+	$(CD_FRONTEND) && \
+	pnpm run test run
