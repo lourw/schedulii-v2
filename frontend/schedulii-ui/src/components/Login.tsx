@@ -12,6 +12,7 @@ function Login() {
       navigate("/home");
     }
   };
+
   return (
     <div>
       {" "}

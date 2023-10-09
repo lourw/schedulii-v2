@@ -26,3 +26,6 @@ jobs:
 
       - name: Run Linters
         run: make lint_frontend
+
+      - name: Run Tests
+        run: make test_frontend
