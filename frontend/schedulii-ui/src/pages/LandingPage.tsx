@@ -1,12 +1,17 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function LandingPage() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log(username);
+    console.log(email);
+    if (email.trim().length > 0 && password.trim().length > 0) {
+      navigate("/home");
+    }
   };
 
   return (
@@ -19,9 +24,9 @@ function LandingPage() {
             className="text-slate-500 rounded border px-1"
             type="email"
             placeholder="you@example.com"
-            value={username}
+            value={email}
             onChange={(event) => {
-              setUsername(event.target.value);
+              setEmail(event.target.value);
             }}
           ></input>
           <label className="text-slate-900">Password:</label>
