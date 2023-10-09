@@ -20,6 +20,9 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": [
+    "src",
+    "node_modules/.pnpm/vitest@0.34.6_jsdom@22.1.0/node_modules/vitest/globals.d.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
