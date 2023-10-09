@@ -13,11 +13,11 @@ build_frontend:
 
 lint_backend:
 	$(CD_BACKEND) && \
-	cargo clippy
+	cargo fmt --check && cargo clippy
 
 lint_fix_backend:
 	$(CD_BACKEND) && \
-	cargo clippy --fix
+	cargo fmt --all && cargo clippy --fix
 
 lint_frontend:
 	$(CD_FRONTEND) && \
@@ -48,3 +48,7 @@ start_app:
 
 stop_app:
 	docker-compose down
+
+test_backend:
+	$(CD_BACKEND) && \
+	cargo test
