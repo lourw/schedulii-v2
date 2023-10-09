@@ -1,5 +1,6 @@
 services:
   backend:
+    init: true # Ensure process receives SIGTERM on stop
     build:
       context: ./backend
     ports:
