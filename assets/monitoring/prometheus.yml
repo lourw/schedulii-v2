@@ -7,11 +7,8 @@ scrape_configs:
     honor_timestamps: true
     static_configs:
       - targets: ['localhost:9090']
+
   - job_name: 'backend'
     honor_timestamps: true
     static_configs:
-      - targets: ['backend:9000']
-  - job_name: 'frontend'
-    honor_timestamps: true
-    static_configs:
-      - targets: ['frontend:8080']
+      - targets: ['localhost:9000']

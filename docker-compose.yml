@@ -39,6 +39,7 @@ services:
       - '--config.file=/etc/prometheus/prometheus.yml'
     ports:
       - "9090:9090"
+
     volumes:
       - ./assets/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
       - monitoring_data:/prometheus
@@ -55,7 +56,7 @@ services:
     ports:
       - "3000:3000"
     profiles:
-      - monitoring
+      - grafana
 
 volumes:
   monitoring_data:
