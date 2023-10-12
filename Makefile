@@ -49,6 +49,9 @@ start_app:
 stop_app:
 	docker-compose down
 
+start_with_monitoring:
+	docker-compose --profile monitoring up
+
 test_backend:
 	$(CD_BACKEND) && \
 	cargo test
