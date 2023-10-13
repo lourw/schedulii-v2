@@ -60,3 +60,6 @@ services:
 
 volumes:
   monitoring_data:
+
+networks:
+  default:

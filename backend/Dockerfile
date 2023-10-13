@@ -20,7 +20,7 @@ FROM alpine:latest
 WORKDIR /app
 COPY --from=build-stage ./app/target/release/. .
 EXPOSE 9000
-CMD ["./backend"]
+CMD ["./schedulii_backend"]
 
 # Notes on Dockerfile
 # To build: `docker build -t backend .`
