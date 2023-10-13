@@ -1,3 +1,6 @@
+set -e
+set -o pipefail
+
 HAS_BACKEND_CHANGED=$(git diff --cached --name-only -- backend/)
 HAS_FRONTEND_CHANGED=$(git diff --cached --name-only -- frontend/)
 

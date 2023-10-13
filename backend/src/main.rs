@@ -1,8 +1,8 @@
 use crate::handlers::hello_world::hello_world;
 use axum::{routing::get, Router, Server};
-use axum_prometheus::{PrometheusMetricLayer};
-use std::net::SocketAddr;
 use axum_prometheus::metrics_exporter_prometheus::PrometheusHandle;
+use axum_prometheus::PrometheusMetricLayer;
+use std::net::SocketAddr;
 
 mod handlers;
 
@@ -20,9 +20,7 @@ async fn main() {
         .unwrap();
 }
 
-fn app(
-    metric_handler: PrometheusHandle,
-) -> Router {
+fn app(metric_handler: PrometheusHandle) -> Router {
     Router::new()
         .route("/", get(hello_world))
         .route("/metrics", get(|| async move { metric_handler.render() }))
@@ -32,6 +30,7 @@ fn app(
 mod tests {
     use super::app;
     use axum::body::Body;
+
     use axum::http::{Request, StatusCode};
     use axum_prometheus::PrometheusMetricLayer;
     use tower::ServiceExt;
