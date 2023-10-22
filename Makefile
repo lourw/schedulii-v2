@@ -17,7 +17,7 @@ lint_backend:
 
 lint_fix_backend:
 	$(CD_BACKEND) && \
-	cargo fmt --all && cargo clippy --fix
+	cargo fmt --all && cargo clippy --fix --allow-staged
 
 lint_frontend:
 	$(CD_FRONTEND) && \
@@ -48,6 +48,9 @@ start_app:
 
 stop_app:
 	docker-compose down
+
+start_with_monitoring:
+	docker-compose --profile monitoring up
 
 test_backend:
 	$(CD_BACKEND) && \

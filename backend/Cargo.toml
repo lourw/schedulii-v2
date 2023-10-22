@@ -7,6 +7,7 @@ edition = "2021"
 
 [dependencies]
 axum = "0.6.20"
+axum-prometheus = "0.4.0"
 hyper = "0.14.27"
 postgres = "0.19.7"
 tokio = { version = "1.32.0", features = ["macros", "rt-multi-thread"] }
