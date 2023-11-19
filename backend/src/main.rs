@@ -1,37 +1,49 @@
 use crate::handlers::hello_world::hello_world;
 use axum::{routing::get, Router, Server};
-use axum_prometheus::metrics_exporter_prometheus::PrometheusHandle;
 use axum_prometheus::PrometheusMetricLayer;
+use dotenvy::dotenv;
+use sqlx::postgres::PgPoolOptions;
+use std::env;
 use std::net::SocketAddr;
 
 mod handlers;
 
+#[derive(Clone)]
+struct AppState {
+    _db_pool: sqlx::PgPool,
+}
+
 #[tokio::main]
 async fn main() {
+    dotenv().expect("No .env file found");
+    let pool = PgPoolOptions::new()
+        .max_connections(5)
+        .connect(&env::var("DATABASE_URL").expect("DATABASE_URL must be set"))
+        .await
+        .expect("Failed to connect to Postgres");
+
+    // Configure the metrics exporter
     let (prometheus_layer, metric_handler) = PrometheusMetricLayer::pair();
-    let app = app(metric_handler);
-    let app = app.layer(prometheus_layer);
+    let state = AppState { _db_pool: pool };
 
-    let addr = SocketAddr::from(([0, 0, 0, 0], 9000));
+    let app = Router::new()
+        .route("/", get(hello_world))
+        .route("/metrics", get(|| async move { metric_handler.render() }))
+        .layer(prometheus_layer)
+        .with_state(state);
 
-    Server::bind(&addr)
+    Server::bind(&SocketAddr::from(([0, 0, 0, 0], 9000)))
         .serve(app.into_make_service())
         .await
         .unwrap();
 }
 
-fn app(metric_handler: PrometheusHandle) -> Router {
-    Router::new()
-        .route("/", get(hello_world))
-        .route("/metrics", get(|| async move { metric_handler.render() }))
-}
-
 #[cfg(test)]
 mod tests {
-    use super::app;
+    use super::*;
     use axum::body::Body;
-
     use axum::http::{Request, StatusCode};
+    use axum::{routing::get, Router};
     use axum_prometheus::PrometheusMetricLayer;
     use tower::ServiceExt;
 
@@ -39,8 +51,11 @@ mod tests {
     #[tokio::test]
     async fn main() {
         let (prometheus_layer, metric_handler) = PrometheusMetricLayer::pair();
-        let app = app(metric_handler);
-        let app = app.layer(prometheus_layer);
+
+        let app = Router::new()
+            .route("/", get(hello_world))
+            .route("/metrics", get(|| async move { metric_handler.render() }))
+            .layer(prometheus_layer);
 
         let response = app
             .oneshot(Request::builder().uri("/").body(Body::empty()).unwrap())
